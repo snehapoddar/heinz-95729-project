@@ -10,7 +10,9 @@ Hilary.scope('heinz').register({
             var self = {
                     searchString: undefined,
                     go: undefined,
-                    onSearchInputChanged: undefined
+                    onSearchInputChanged: undefined,
+                    test: undefined,
+                    testVal: ko.observable('hello')
                 },
                 oldSearchString;
 
@@ -33,6 +35,12 @@ Hilary.scope('heinz').register({
 
             // but don't auto-search more than twice per second
             self.onSearchInputChanged.extend({ rateLimit: 500 });
+
+            self.test = function () {
+                console.log(self.testVal());
+                self.testVal('hello world!');
+                console.log(self.testVal());
+            };
 
             return self;
         };

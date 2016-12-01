@@ -13,6 +13,21 @@
                 });
             },
             composeModules: function (err, scope) {
+                var homeVmSingleton;
+
+                scope.register({
+                    name: 'homeVmSingleton',
+                    dependencies: ['HomeVM'],
+                    factory: function (HomeVM) {
+                        if (homeVmSingleton) {
+                            return homeVmSingleton;
+                        }
+
+                        homeVmSingleton = new HomeVM();
+                        return homeVmSingleton;
+                    }
+                });
+
                 scope.register({ name: 'newGidgetModule', singleton: true, factory: function () { return new Gidget.GidgetModule(); }});
                 scope.register({ name: 'GidgetRoute',singleton: true, factory: function () { return Gidget.GidgetRoute; }});
                 scope.register({ name: 'Blueprint',singleton: true, factory: function () { return Hilary.Blueprint; }});
@@ -76,10 +91,10 @@
                 throw err;
             }
 
-            var HomeVM = scope.resolve('HomeVM'),
+            var homeVmSingleton = scope.resolve('homeVmSingleton'),
                 viewEngine = scope.resolve('viewEngine');
 
-            ko.applyBindings(new HomeVM(), $('#header')[0]);
+            ko.applyBindings(homeVmSingleton, $('#header')[0]);
             ko.applyBindings(viewEngine.mainVM, $main[0]);
         }
     });

@@ -1,10 +1,12 @@
 Hilary.scope('heinz').register({
     name: 'homeController',
-    dependencies: ['newGidgetModule', 'GidgetRoute', 'locale', 'viewEngine', 'Products', 'jQuery'],
-    factory: function ($this, GidgetRoute, locale, viewEngine, Products, $) {
+    dependencies: ['newGidgetModule', 'GidgetRoute', 'locale', 'viewEngine', 'Products', 'jQuery', 'homeVmSingleton'],
+    factory: function ($this, GidgetRoute, locale, viewEngine, Products, $, homeVmSingleton) {
         'use strict';
 
         $this.get['/'] = function () {
+            homeVmSingleton.test();
+            
             viewEngine.setVM({
                 template: 't-empty',
                 data: {
