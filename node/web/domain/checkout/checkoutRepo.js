@@ -90,10 +90,13 @@ module.exports.factory = function (db, Checkout, Blueprint, exceptions, is) {
 			return;
 		}
 
-    collection.update ({"userId": userId},
-      	{$pull: {"books": {"uid": books[0].uid}}});
+    	collection.update ({"userId": userId},
+      		{$pull: {"books": {"uid": books[0].uid}}});
 
-	collection.update({"userId": userId}, {$push: {"books": { $each: books }}}, callback)};
+		collection.update({"userId": userId}, {$push: {"books": { $each: books }}}, {upsert: true}, callback);
+
+
+    };
 
      /*
     // Create a shopping cart for a user

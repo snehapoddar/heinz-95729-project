@@ -27,6 +27,16 @@ module.exports.factory = function (router, checkoutRepo, productsRepo, orderHist
 					return;
 				}
 
+				checkoutRepo.update(userId, books, function (err, result) {
+					if (!err) {
+						res.redirect('/checkout/' + userId);
+						return;
+					} else {
+						res.redirect('/report?error=' + "db");
+						return;
+					}
+				})
+				/*
 				if (result) {
 					// Update
 					checkoutRepo.update(userId, books, function (err, result) {
@@ -55,6 +65,7 @@ module.exports.factory = function (router, checkoutRepo, productsRepo, orderHist
 						}
 					})
 				}
+				*/
 			})
 		});
 	});
